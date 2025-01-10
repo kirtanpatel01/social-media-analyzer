@@ -4,12 +4,11 @@ export default async function handler(req, res) {
     const targetUrl = `https://api.langflow.astra.datastax.com${req.url.replace('/api', '')}`;
   
     try {
-        const body = req.body;
-    //   const isPostOrPut = req.method === 'POST' || req.method === 'PUT';
-      console.log("Incoming request body (proxy):", body);
+      const isPostOrPut = req.method === 'POST' || req.method === 'PUT';
+      console.log("Incoming request body (proxy):", req.body);
 
-    //   const body = isPostOrPut ? (typeof req.body === 'object' ? JSON.stringify(req.body) : req.body) : undefined;
-    //   console.log("Request Body Before Sending:", JSON.stringify(body, null, 2));
+      const body = isPostOrPut ? (typeof req.body === 'object' ? JSON.stringify(req.body) : req.body) : undefined;
+      console.log("Request Body Before Sending:", JSON.stringify(body, null, 2));
   
       const response = await fetch(targetUrl, {
         method: req.method,
