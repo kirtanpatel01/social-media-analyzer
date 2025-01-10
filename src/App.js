@@ -5,7 +5,7 @@ import { MessageCircle, LayoutDashboard } from 'lucide-react';
 
 class LangflowClient {
     constructor(baseURL, applicationToken) {
-        this.baseURL = '/api'; // Use proxy path instead of full URL
+        this.baseURL = process.env.REACT_APP_BACKEND_URL || '/api'; // Use proxy path instead of full URL
         this.applicationToken = applicationToken;
     }
     async post(endpoint, body, headers = {"Content-Type": "application/json"}) {
