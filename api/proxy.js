@@ -1,4 +1,6 @@
 export default async function handler(req, res) {
+    console.log("Incoming request:", req.method, req.url, req.body);
+  
     const targetUrl = `https://api.langflow.astra.datastax.com${req.url.replace('/api', '')}`;
   
     try {
@@ -7,16 +9,17 @@ export default async function handler(req, res) {
         headers: {
           ...req.headers,
           'Content-Type': 'application/json',
-          // Add any additional headers if required
         },
         body: req.method === 'POST' ? JSON.stringify(req.body) : undefined,
       });
   
-      // Forward the response back to the client
-      res.status(response.status).send(await response.text());
+      const responseBody = await response.text();
+      console.log("Proxy response:", response.status, responseBody);
+  
+      res.status(response.status).send(responseBody);
     } catch (error) {
-      console.error('Proxy error:', error);
-      res.status(500).json({ error: 'Proxy error', details: error.message });
+      console.error("Proxy error:", error);
+      res.status(500).json({ error: "Proxy error", details: error.message });
     }
   }
   
