@@ -12,6 +12,7 @@ class LangflowClient {
     headers["Authorization"] = `Bearer ${this.applicationToken}`;
     headers["Content-Type"] = "application/json";
 
+    console.log(headers)
     const url = `${this.baseURL}${endpoint}`;
     console.log("Request Body Before Sending:", JSON.stringify(body, null, 2));
     try {
@@ -25,7 +26,7 @@ class LangflowClient {
       const text = await response.text();
       let json;
       const contentType = response.headers.get("Content-Type");
-      console.log(contentType)
+      console.log(contentType)  //there should be application/json
       try {
         console.log('text: ', text)
         console.log('text-type: ', typeof text);
