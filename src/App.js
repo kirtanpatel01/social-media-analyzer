@@ -21,13 +21,17 @@ class LangflowClient {
         body: JSON.stringify(body),
         credentials: "include",
       });
-
+      console.log('response: ', response)
       const text = await response.text();
       let json;
       const contentType = response.headers.get("Content-Type");
       console.log(contentType)
       try {
+        console.log('text: ', text)
+        console.log('text-type: ', typeof text);
         json = JSON.parse(text);
+        console.log('json: ', json)
+        console.log('json-type: ', typeof json);
       } catch (e) {
         console.error("Response text:", text);
         throw new Error("Invalid JSON response from server");
