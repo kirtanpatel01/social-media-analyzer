@@ -18,11 +18,13 @@ class LangflowClient {
         method: "POST",
         headers: headers,
         body: JSON.stringify(body),
-        credentials: "same-origin",
+        credentials: "include",
       });
 
       const text = await response.text();
       let json;
+      const contentType = response.headers.get("Content-Type");
+      console.log(contentType)
       try {
         json = JSON.parse(text);
       } catch (e) {
