@@ -1,26 +1,22 @@
 export default async function handler(req, res) {
-    const { method, body, headers, query } = req;
-  
-    const targetUrl = `https://api.langflow.astra.datastax.com${req.url.replace(
-      '/api',
-      ''
-    )}`;
+    const targetUrl = `https://api.langflow.astra.datastax.com${req.url.replace('/api', '')}`;
   
     try {
       const response = await fetch(targetUrl, {
-        method,
+        method: req.method,
         headers: {
-          'Content-Type': headers['content-type'] || 'application/json',
-          Authorization: headers['authorization'] || '',
+          ...req.headers,
+          'Content-Type': 'application/json',
+          // Add any additional headers if required
         },
-        body: method === 'POST' ? JSON.stringify(body) : undefined,
+        body: req.method === 'POST' ? JSON.stringify(req.body) : undefined,
       });
   
-      const data = await response.text();
-      res.status(response.status).send(data);
+      // Forward the response back to the client
+      res.status(response.status).send(await response.text());
     } catch (error) {
-      console.error('Error forwarding request:', error);
-      res.status(500).send({ error: 'Proxy error', details: error.message });
+      console.error('Proxy error:', error);
+      res.status(500).json({ error: 'Proxy error', details: error.message });
     }
   }
   
