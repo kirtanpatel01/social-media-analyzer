@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         body,
       });
   
-      const responseBody = await response.json();
+      const responseBody = await response.text();
       console.log("Proxy response:", response.status, responseBody);
   
       res.status(response.status).send(responseBody);
