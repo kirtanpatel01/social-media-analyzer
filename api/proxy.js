@@ -5,7 +5,10 @@ export default async function handler(req, res) {
   
     try {
       const isPostOrPut = req.method === 'POST' || req.method === 'PUT';
+      console.log("Incoming request body (proxy):", req.body);
+
       const body = isPostOrPut ? (typeof req.body === 'object' ? JSON.stringify(req.body) : req.body) : undefined;
+      console.log("Request Body Before Sending:", JSON.stringify(body, null, 2));
   
       const response = await fetch(targetUrl, {
         method: req.method,

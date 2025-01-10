@@ -13,6 +13,7 @@ class LangflowClient {
     headers["Content-Type"] = "application/json";
 
     const url = `${this.baseURL}${endpoint}`;
+    console.log("Request Body Before Sending:", JSON.stringify(body, null, 2));
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -54,6 +55,7 @@ class LangflowClient {
     tweaks = {}
   ) {
     const endpoint = `/lf/${langflowId}/api/v1/run/${flowId}?stream=${stream}`;
+
     return this.post(endpoint, {
       input_value: inputValue,
       input_type: inputType,
